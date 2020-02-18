@@ -1,0 +1,16 @@
+pipeline {
+	agent a
+	stages {
+		stage('compilation:') {
+			steps {
+				bat 'nuget restore WebAppDotNet.sln'  
+				bat "\"${tool 'MSBuild_On_Local'}\" WebAppDotNet.sln"
+			}
+		}
+		stage('testing:') {
+			steps {
+				bat '"C:\\Program Files (x86)\\NUnit.org\\nunit-console\\nunit3-console.exe"'
+			}
+		}
+	}
+}
