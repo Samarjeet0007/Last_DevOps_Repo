@@ -19,7 +19,7 @@ pipeline {
 			steps {
 			
 				withSonarQubeEnv('sonarqube') {
-					bat "%scannerHome%\\bin\\sonar-scanner"
+					powershell "\$env:scannerHome/bin/sonar-scanner"
 				}
 			}
 		}
