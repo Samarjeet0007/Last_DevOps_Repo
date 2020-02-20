@@ -13,9 +13,11 @@ pipeline {
 	//		}
 	//	}
 		stage('code_quality:') {
-			
+			environment {
+			scannerHome = tool 'SonarScanner'
+                                      }
 			steps {
-			def scannerHome = tool 'SonarScanner'
+			
 				withSonarQubeEnv('sonarqube') {
 					powershell "${scannerHome}/bin/sonar-scanner"
 				}
