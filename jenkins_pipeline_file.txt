@@ -1,4 +1,5 @@
 node {
+         def scannerHome = tool 'SonarScanner'
 		stage('compilation:') {
 			
 				bat 'nuget restore WebAppDotNet.sln'  
@@ -12,7 +13,7 @@ node {
 	//	}
 		stage('code_quality:') {
 			
-			def scannerHome = tool 'SonarScanner'
+			
 			echo $scannerHome
                          withSonarQubeEnv('sonarqube') {
 					bat "${scannerHome}\\bin\\sonar-scanner"
