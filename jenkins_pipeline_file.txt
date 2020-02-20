@@ -14,9 +14,9 @@ node {
 		stage('code_quality:') {
 			
 			
-			echo $scannerHome
+			
                          withSonarQubeEnv('sonarqube') {
-					bat "${scannerHome}\\bin\\sonar-scanner"
+					bat "\"${scannerHome}\\bin\\sonar-scanner"
 				
 			}
 		}
