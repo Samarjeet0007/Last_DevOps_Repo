@@ -13,8 +13,9 @@ node {
 		stage('code_quality:') {
 			
 			def scannerHome = tool 'SonarScanner'
+			echo $scannerHome
                          withSonarQubeEnv('sonarqube') {
-					bat "%scannerHome%//bin//sonar-scanner"
+					bat "${scannerHome}\\bin\\sonar-scanner"
 				
 			}
 		}
