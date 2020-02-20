@@ -1,27 +1,22 @@
-pipeline {
-	agent any
-	stages {
+node {
 		stage('compilation:') {
-			steps {
+			
 				bat 'nuget restore WebAppDotNet.sln'  
 				bat "\"${tool 'MSBuild_On_Local'}\" WebAppDotNet.sln"
-			}
+			
 		}
 	//	stage('testing:') {
-	//		steps {
+	//		
 	//			bat '"C:\\Users\\samarjeetkumar\\NUnit.ConsoleRunner.3.10.0\\tools\\nunit3-console.exe"' 
-	//		}
+	//		
 	//	}
 		stage('code_quality:') {
-			environment {
-			scannerHome = tool 'SonarScanner'
-                                      }
-			steps {
 			
-				withSonarQubeEnv('sonarqube') {
-					powershell """\$env:scannerHome/bin/sonar-scanner"""
-				}
+			def scannerHome = tool 'SonarScanner'
+                         withSonarQubeEnv('sonarqube') {
+					bat "\${scannerHome}/bin/sonar-scanner"
+				
 			}
 		}
 	}
-}
+
