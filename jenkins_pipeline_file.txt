@@ -7,18 +7,18 @@ pipeline {
 				bat "\"${tool 'MSBuild_On_Local'}\" WebAppDotNet.sln"
 			}
 		}
-		stage('testing:') {
-			steps {
-				bat '"C:\\Users\\samarjeetkumar\\NUnit.ConsoleRunner.3.10.0\\tools\\nunit3-console.exe"' 
-			}
-		}
+	//	stage('testing:') {
+	//		steps {
+	//			bat '"C:\\Users\\samarjeetkumar\\NUnit.ConsoleRunner.3.10.0\\tools\\nunit3-console.exe"' 
+	//		}
+	//	}
 		stage('code_quality:') {
-			environment {
-				scannerhome = tool 'Sonar'
-			}
+			def sqScannerMsBuildHome = tool 'Scanner for MSBuild 4.6'
 			steps {
 				withSonarQubeEnv('sonarqube') {
-					bat "%scannerhome%\\bin\\sonar-scanner"
+					bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe begin /k:myKey"
+                                        bat 'MSBuild.exe /t:Rebuild'
+                                        bat "${sqScannerMsBuildHome}\\SonarQube.Scanner.MSBuild.exe end"
 				}
 			}
 		}
